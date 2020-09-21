@@ -1,19 +1,18 @@
 import React from "react";
-import { Link, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
+import NavBar from "./components/NavBar";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <nav>
-        <Link to="/login">Login</Link>
-        <Switch>
-          <Route path="/login">
-            <LoginForm />
-          </Route>
-        </Switch>
-      </nav>
+      <NavBar />
+      <Switch>
+        <Route path="/login">
+          <LoginForm />
+        </Route>
+      </Switch>
     </div>
   );
 }
