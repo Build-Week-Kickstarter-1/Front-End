@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+.nav-bar {
+  margin-top: 1%;
+}
+
+.nav-bar a {
+  margin: 2%;
+}
+
 .login-form {
   width: 50%;
   text-align: center;
