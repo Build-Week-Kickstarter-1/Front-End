@@ -46,10 +46,10 @@ code {
 
 .input-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 2%;
 }
 
 button {
-  margin: 2% auto;
+  margin: 2% auto 5%;
 }
