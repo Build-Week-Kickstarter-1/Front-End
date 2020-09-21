@@ -41,7 +41,6 @@ export default function LoginForm() {
           </div>
 
           <button>Submit</button>
-          <br />
 
           <Link to="/register">Register</Link>
         </div>
