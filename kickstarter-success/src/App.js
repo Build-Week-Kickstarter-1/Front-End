@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import NavBar from "./components/NavBar";
 import "./App.css";
