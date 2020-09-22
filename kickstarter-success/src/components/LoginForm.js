@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import * as yup from "yup";
 import schema from "../validation/loginSchema";
 
 const initialFormValues = {
   username: "",
-  passowrd: "",
+  password: "",
 };
 
 const initialFormErrors = {
@@ -51,10 +52,22 @@ export default function LoginForm() {
     });
   }, [formValues]);
 
+  const submit = (evt) => {
+    evt.preventDefault();
+    axios
+      .post("https://reqres.in/api/users", formValues)
+      .then((res) => {
+        setFormValues(initialFormValues);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="login-form">
       <h2>Login</h2>
-      <form>
+      <form onSubmit={submit}>
         <div className="errors-container">
           <p>{formErrors.username}</p>
           <p>{formErrors.password}</p>
