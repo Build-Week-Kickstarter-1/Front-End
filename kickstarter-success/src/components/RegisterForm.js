@@ -68,8 +68,8 @@ function RegisterForm() {
 
 	const formSubmit = () => {
 		const newOrder = {
-			name: registerForm.name.trim(),
-			email: registerForm.email.trim(),
+			username: registerForm.name.trim(),
+			// email: registerForm.email.trim(),
 			password: registerForm.password.trim(),
 		};
 		console.log(newOrder);
@@ -119,14 +119,14 @@ function RegisterForm() {
 	//////////////////// Form Information  //////////////////////
 	return (
 		<form onSubmit={submitForm}>
+			<h1> Registration </h1>
 			<label>
-				<h3>Name:</h3>
 				<input
 					className="name-input"
 					id="name"
 					type="text"
 					name="name"
-					placeholder="Enter Name"
+					placeholder="Name"
 					value={registerForm.name}
 					onChange={onChange}
 				/>
@@ -135,13 +135,12 @@ function RegisterForm() {
 				) : null}
 			</label>
 			<label>
-				<h3>Username:</h3>
 				<input
 					className="username-input"
 					id="username"
 					type="text"
 					name="username"
-					placeholder="Enter Username"
+					placeholder="Username"
 					value={registerForm.username}
 					onChange={onChange}
 				/>
@@ -149,27 +148,25 @@ function RegisterForm() {
 					<h4 className="error"> {formErrors.username}</h4>
 				) : null}
 			</label>
-			<label>
-				<h3>Email:</h3>
+			{/* <label>
 				<input
 					className="email-input"
 					id="email"
 					type="email"
 					name="email"
-					placeholder="Enter Email"
+					placeholder="Email"
 					value={registerForm.email}
 					onChange={onChange}
 				/>
 				{formErrors.email.length > 0 ? <p>{formErrors.email}</p> : null}
-			</label>
+			</label> */}
 			<label>
-				<h3>Password:</h3>
 				<input
 					className="password-input"
 					id="password"
 					type="text"
 					name="password"
-					placeholder="Enter Password"
+					placeholder="Password"
 					value={registerForm.password}
 					onChange={onChange}
 				/>
