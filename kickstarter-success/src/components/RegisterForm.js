@@ -7,8 +7,13 @@ function RegisterForm() {
 
 	const initialRegisterFormValues = {
 		name: "",
+
+		instructions: "",
+		email: "",
+
 		email: "",
 		password: "",
+
 	};
 
 	// const initialFormErrors = {
@@ -17,6 +22,18 @@ function RegisterForm() {
 	//  size: "",
 	// };
 
+
+	////////////////////// Initial Values Here  //////////////////////
+
+	////////////////////// useStates Here  //////////////////////
+
+	const [registerForm, setRegisterForm] = useState(initialRegisterFormValues);
+
+	////////////////////// useStates Here  //////////////////////
+
+	////////////////////// Form Information Here  //////////////////////
+
+=======
 	////////////////////// useStates Here  //////////////////////
 
 	const [registerForm, setRegisterForm] = useState(initialRegisterFormValues);
@@ -73,6 +90,7 @@ function RegisterForm() {
 	// 	formSubmit();
 	// };
 
+
 	return (
 		<form>
 			<label>
@@ -83,10 +101,15 @@ function RegisterForm() {
 					name="name"
 					placeholder="Enter Name Here"
 					value={registerForm.name}
+
+				/>
+			</label>
+
 					onChange={onChange}
 				/>
 			</label>
 			<br></br>
+
 			<label>
 				Email:
 				<input
@@ -95,6 +118,20 @@ function RegisterForm() {
 					name="email"
 					placeholder="Enter Email Here"
 					value={registerForm.email}
+
+				/>
+			</label>
+			<label>
+				Email:
+				<input
+					id="password"
+					type="text"
+					name="paswword"
+					placeholder="Enter Password Here"
+					value={registerForm.password}
+				/>
+			</label>
+
 					onChange={onChange}
 				/>
 			</label>
@@ -112,6 +149,7 @@ function RegisterForm() {
 			</label>
 			<br></br>
 			<button>Confirm</button>
+
 		</form>
 
 		///////////////////// Form Information Here  //////////////////////
