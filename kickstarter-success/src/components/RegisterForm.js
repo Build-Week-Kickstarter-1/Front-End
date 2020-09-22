@@ -157,7 +157,9 @@ function RegisterForm() {
 					value={registerForm.email}
 					onChange={onChange}
 				/>
-				{formErrors.email.length > 0 ? <p>{formErrors.email}</p> : null}
+				{formErrors.email.length > 0 ? (
+					<h4 className="error">{formErrors.email}</h4>
+				) : null}
 			</label>
 			<label>
 				<h3>Password:</h3>
@@ -170,7 +172,9 @@ function RegisterForm() {
 					value={registerForm.password}
 					onChange={onChange}
 				/>
-				{formErrors.password.length > 0 ? <p>{formErrors.password}</p> : null}
+				{formErrors.password.length > 0 ? (
+					<h4 className="error">{formErrors.password}</h4>
+				) : null}
 			</label>
 			<button disabled={buttonDisabled}>Confirm</button>
 		</form>
