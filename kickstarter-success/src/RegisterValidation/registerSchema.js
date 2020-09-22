@@ -9,10 +9,10 @@ const registerSchema = yup.object().shape({
 		.string()
 		.required("Username is required")
 		.min(5, "Username must be 5 characters or longer"),
-	email: yup
-		.string()
-		.email("Must be a valid email")
-		.required("Email is required"),
+	// email: yup
+	// 	.string()
+	// 	.email("Must be a valid email")
+	// 	.required("Email is required"),
 	password: yup
 		.string()
 		.required("Password is required")
