@@ -14,7 +14,7 @@ const initialFormErrors = {
   password: "",
 };
 
-export default function LoginForm() {
+export default function LoginForm(props) {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
@@ -55,9 +55,21 @@ export default function LoginForm() {
   const submit = (evt) => {
     evt.preventDefault();
     axios
-      .post("https://reqres.in/api/users", formValues)
+      .post(
+        "https://kickstarter-success-app.herokuapp.com/login",
+        `grant_type=password&username=${formValues.username}&password=${formValues.password}`,
+        {
+          headers: {
+            // btoa is converting our client id/client secret into base64
+            Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
       .then((res) => {
-        setFormValues(initialFormValues);
+        console.log(res.data);
+        localStorage.setItem("token", res.data.access_token);
+        // props.history.push("/dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +78,7 @@ export default function LoginForm() {
 
   return (
     <div className="login-form">
-      <h2>Login</h2>
+      <h1>Login</h1>
       <form onSubmit={submit}>
         <div className="errors-container">
           <p>{formErrors.username}</p>
