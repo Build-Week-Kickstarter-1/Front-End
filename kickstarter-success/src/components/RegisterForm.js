@@ -49,7 +49,10 @@ function RegisterForm() {
 
 	const newUserSubmit = (newUser) => {
 		axios
-			.post("https://reqres.in/api/orders", newUser)
+			.post(
+				"https://kickstarter-success-app.herokuapp.com/createnewuser",
+				newUser
+			)
 			.then((response) => {
 				setPost([...post, response.data]);
 				setRegisterForm(initialRegisterFormValues);

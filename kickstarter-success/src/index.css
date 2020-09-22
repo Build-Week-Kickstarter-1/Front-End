@@ -11,8 +11,6 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
-<<<<<<< HEAD
-=======
 
 .nav-bar {
 	margin-top: 1%;
@@ -57,44 +55,43 @@ button {
 }
 
 .nav-bar {
-  margin-top: 1%;
+	margin-top: 1%;
 }
 
 .nav-bar a {
-  margin: 2%;
+	margin: 2%;
 }
 
 .login-form {
-  width: 50%;
-  text-align: center;
-  margin: 2% auto;
-  padding-bottom: 2%;
-  border: 2px solid black;
+	width: 50%;
+	text-align: center;
+	margin: 2% auto;
+	padding-bottom: 2%;
+	border: 2px solid black;
 }
 
 .login-form a {
-  font-size: small;
+	font-size: small;
 }
 
 .errors-container {
-  color: red;
-  font-weight: bold;
+	color: red;
+	font-weight: bold;
 }
 
 .form-container {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+	margin: 0 auto;
 }
 
 .input-container {
-  display: flex;
-  justify-content: center;
-  padding: 2%;
+	display: flex;
+	justify-content: center;
+	padding: 2%;
 }
 
 button {
-  margin: 2% auto 5%;
+	margin: 2% auto 5%;
 }
->>>>>>> ed43f94f392feb9d0fb11fee9b972f3f51c8e589
