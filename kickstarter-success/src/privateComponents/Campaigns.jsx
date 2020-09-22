@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
 import {userInfo} from '../store/actions/userActions'
 import {CircularProgress, TableContainer, Paper, makeStyles, Table, TableHead, TableCell, TableRow, TableBody} from '@material-ui/core'
 import Campaign from './Campaign'
@@ -19,8 +18,8 @@ const Campaigns = ({userInfo}) => {
     
     useEffect(()=>{
         userInfo()
-    },[])
-    if (user.errorMessage == "Request failed with status code 401"){
+    },[user.length])
+    if (user.errorMessage === "Request failed with status code 401"){
         window.localStorage.removeItem('token')
         history.push('/login')
     }

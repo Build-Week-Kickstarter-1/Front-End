@@ -3,11 +3,8 @@ import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
-import {axiosWithAuth} from '../utils/axiosWithAuth.jsx'
-
 const Login = () => {
-  // make a post request to retrieve a token from the api
-  // when you have handled the token, navigate to the BubblePage route
+
   const initialLogin = {
     username: '',
     password: '',
@@ -24,7 +21,6 @@ const Login = () => {
     axios
       .post('https://kickstarter-success-app.herokuapp.com/login', `grant_type=password&username=${login.username}&password=${login.password}`, {
         headers: {
-          // btoa is converting our client id/client secret into base64
           Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
           'Content-Type': 'application/x-www-form-urlencoded'
         }

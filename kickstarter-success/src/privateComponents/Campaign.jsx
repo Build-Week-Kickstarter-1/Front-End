@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import {CircularProgress, TableContainer, Paper, makeStyles, Table, TableHead, TableCell, TableRow, TableBody} from '@material-ui/core'
+import React from 'react';
+import {TableCell, TableRow} from '@material-ui/core'
 
-
-const Campaign = ({campaignid, name, category, goal, currency, launchdate, successprediction, info}) => {
+const Campaign = ({info}) => {
 
     return (
-        <TableRow key={campaignid}>
+        <TableRow key={info.campaignid}>
             <TableCell >{info.campaignid}</TableCell>
             <TableCell align="right">{info.name}</TableCell>
             <TableCell align="right">{info.category}</TableCell>
@@ -17,4 +16,4 @@ const Campaign = ({campaignid, name, category, goal, currency, launchdate, succe
     )
 }
 
-export default (Campaign)
+export default Campaign
