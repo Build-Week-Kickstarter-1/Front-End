@@ -11,6 +11,8 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
+<<<<<<< HEAD
+=======
 
 .nav-bar {
 	margin-top: 1%;
@@ -95,3 +97,4 @@ button {
 button {
   margin: 2% auto 5%;
 }
+>>>>>>> ed43f94f392feb9d0fb11fee9b972f3f51c8e589
