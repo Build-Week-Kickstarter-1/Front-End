@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Link, useHistory} from 'react-router-dom';
+
 import './App.css';
+import './components/Login';
+import './routes/Routes'
+import Routes from './routes/Routes';
 
 function App() {
+  const history = useHistory();
+  const token = window.localStorage.getItem('token')
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => history.push(token ? '/signOut' : '/login')}>{token ? 'Sign Out' : 'Login'}</button>
+      <Routes/>
     </div>
   );
 }
