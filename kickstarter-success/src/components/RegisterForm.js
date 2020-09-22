@@ -104,13 +104,13 @@ function RegisterForm() {
 	}, [registerForm]);
 
 	// const axiosWithAuth = () => {
-	// 	const token = window.localStorage.getItem("token");
-	// 	return axios.create({
-	// 		headers: {
-	// 			Authorization: `Bearer ${token}`,
-	// 		},
-	// 		baseURL: "https://kickstarter-success-app.herokuapp.com",
-	// 	});
+	//  const token = window.localStorage.getItem("token");
+	//  return axios.create({
+	//      headers: {
+	//          Authorization: `Bearer ${token}`,
+	//      },
+	//      baseURL: "https://kickstarter-success-app.herokuapp.com",
+	//  });
 	// };
 
 	//////////////////// Form Information  //////////////////////
@@ -157,9 +157,7 @@ function RegisterForm() {
 					value={registerForm.email}
 					onChange={onChange}
 				/>
-				{formErrors.email.length > 0 ? (
-					<h4 className="error">{formErrors.email}</h4>
-				) : null}
+				{formErrors.email.length > 0 ? <p>{formErrors.email}</p> : null}
 			</label>
 			<label>
 				<h3>Password:</h3>
@@ -172,9 +170,7 @@ function RegisterForm() {
 					value={registerForm.password}
 					onChange={onChange}
 				/>
-				{formErrors.password.length > 0 ? (
-					<h4 className="error">{formErrors.password}</h4>
-				) : null}
+				{formErrors.password.length > 0 ? <p>{formErrors.password}</p> : null}
 			</label>
 			<button disabled={buttonDisabled}>Confirm</button>
 		</form>

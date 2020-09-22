@@ -10,15 +10,14 @@ function App() {
 		<div className="App">
 			<NavBar />
 			<Switch>
-				<Route path="/login">
-					<LoginForm />
-				</Route>
 				<Route path="/register">
 					<RegisterForm />
+				</Route>
+				<Route path="/login">
+					<LoginForm />
 				</Route>
 			</Switch>
 		</div>
 	);
 }
-
 export default App;
