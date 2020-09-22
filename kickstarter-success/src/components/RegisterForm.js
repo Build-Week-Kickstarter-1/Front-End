@@ -10,12 +10,14 @@ function RegisterForm() {
 		name: "",
 		email: "",
 		password: "",
+		username: "",
 	};
 
 	const initialFormErrors = {
 		name: "",
 		email: "",
 		password: "",
+		username: "",
 	};
 
 	////////////////////// useStates Here  //////////////////////
@@ -105,6 +107,7 @@ function RegisterForm() {
 			<label>
 				Name:
 				<input
+					className="name-input"
 					id="name"
 					type="text"
 					name="name"
@@ -118,8 +121,25 @@ function RegisterForm() {
 			</label>
 			<br></br>
 			<label>
+				Username:
+				<input
+					className="username-input"
+					id="username"
+					type="text"
+					name="username"
+					placeholder="Enter Username"
+					value={registerForm.username}
+					onChange={onChange}
+				/>
+				{formErrors.username.length > 5 ? (
+					<h4 className="error"> {formErrors.username}</h4>
+				) : null}
+			</label>
+			<br></br>
+			<label>
 				Email:
 				<input
+					className="email-input"
 					id="email"
 					type="email"
 					name="email"
@@ -133,6 +153,7 @@ function RegisterForm() {
 			<label>
 				Password:
 				<input
+					className="password-input"
 					id="password"
 					type="text"
 					name="password"
@@ -143,7 +164,7 @@ function RegisterForm() {
 				{formErrors.password.length > 0 ? <p>{formErrors.password}</p> : null}
 			</label>
 			<br></br>
-			<button>Confirm</button>
+			<button disabled={buttonDisabled}>Confirm</button>
 		</form>
 
 		///////////////////// Form Information Here  //////////////////////
