@@ -53,3 +53,45 @@ code {
 button {
 	margin: 2% auto 5%;
 }
+
+.nav-bar {
+  margin-top: 1%;
+}
+
+.nav-bar a {
+  margin: 2%;
+}
+
+.login-form {
+  width: 50%;
+  text-align: center;
+  margin: 2% auto;
+  padding-bottom: 2%;
+  border: 2px solid black;
+}
+
+.login-form a {
+  font-size: small;
+}
+
+.errors-container {
+  color: red;
+  font-weight: bold;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  padding: 2%;
+}
+
+button {
+  margin: 2% auto 5%;
+}
