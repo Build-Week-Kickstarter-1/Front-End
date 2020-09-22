@@ -4,8 +4,10 @@ import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import NavBar from "./components/NavBar";
 import "./App.css";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
+
   return (
     <div className="App">
       <NavBar />
@@ -22,6 +24,6 @@ function App() {
       </Switch>
     </div>
   );
-}
+
 
 export default App;
