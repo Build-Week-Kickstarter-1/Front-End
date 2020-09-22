@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-// import * as yup from "yup";
-// import axios from "axios";
+import axios from "axios";
+import * as yup from "yup";
+import registerSchema from "../RegisterValidation/registerSchema";
 
 function RegisterForm() {
 	////////////////////// Initial Values Here  //////////////////////
@@ -11,20 +12,23 @@ function RegisterForm() {
 		password: "",
 	};
 
-	// const initialFormErrors = {
-	//  name: "",
-	//  instructions: "",
-	//  size: "",
-	// };
+	const initialFormErrors = {
+		name: "",
+		email: "",
+		password: "",
+	};
 
 	////////////////////// useStates Here  //////////////////////
 
 	const [registerForm, setRegisterForm] = useState(initialRegisterFormValues);
 	const [post, setPost] = useState([]);
+	const [formErrors, setFormErrors] = useState(initialFormErrors);
+	const [buttonDisabled, setButtonDisabled] = useState(true);
 
 	////////////////////// State Changes Here  //////////////////////
 
 	const inputChange = (name, value) => {
+		validate(name, value);
 		setRegisterForm({
 			...registerForm,
 			[name]: value,
@@ -40,51 +44,77 @@ function RegisterForm() {
 
 	////////////////////// New User Registration  //////////////////////
 
-	// const newUserSubmit = (newUser) => {
-	// 	axios
-	// 		.post("https://reqres.in/api/orders", newUser)
-	// 		.then((response) => {
-	// 			setPost([...post, response.data]);
-	// 			setRegisterForm(initialRegisterFormValues);
-	// 			// setFormErrors({initialFormValues});
-	// 		})
-	// 		.catch((error) => {
-	// 			debugger;
-	// 			console.log(error);
-	// 		})
-	// 		.finally(() => {});
-	// };
+	const newUserSubmit = (newUser) => {
+		axios
+			.post("https://reqres.in/api/orders", newUser)
+			.then((response) => {
+				setPost([...post, response.data]);
+				setRegisterForm(initialRegisterFormValues);
+				// setFormErrors({initialFormValues});
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			.finally(() => {});
+	};
 
-	////////////////////// New Submission  //////////////////////
+	//////////////////// New Submission  //////////////////////
 
-	// const formSubmit = () => {
-	// 	const newOrder = {
-	// 		name: registerForm.name.trim(),
-	// 		email: registerForm.instructions.trim(),
-	// 		password: registerForm.size.trim()
+	const formSubmit = () => {
+		const newOrder = {
+			name: registerForm.name.trim(),
+			email: registerForm.email.trim(),
+			password: registerForm.password.trim(),
+		};
+		console.log(newOrder);
+		newUserSubmit(newOrder);
+	};
 
-	// 	};
-	// 	console.log(newOrder);
-	// 	newUserSubmit(newOrder);
-	// };
+	const submitForm = (event) => {
+		event.preventDefault();
+		formSubmit();
+	};
 
-	// const submitForm = (event) => {
-	// 	event.preventDefault();
-	// 	formSubmit();
-	// };
+	//////////////////// Adding Validation  //////////////////////
+	const validate = (name, value) => {
+		yup
+			.reach(registerSchema, name)
+			.validate(value)
+			.then((valid) => {
+				setFormErrors({
+					...formErrors,
+					[name]: "",
+				});
+			})
+			.catch((err) => {
+				setFormErrors({
+					...formErrors,
+					[name]: err.errors[0],
+				});
+			});
+	};
+	//////////////////// Adding useEffect  //////////////////////
+	useEffect(() => {
+		registerSchema.isValid(registerForm).then((isValid) => {
+			setButtonDisabled(!isValid);
+		});
+	}, [registerForm]);
 
 	return (
-		<form>
+		<form onSubmit={submitForm}>
 			<label>
 				Name:
 				<input
 					id="name"
 					type="text"
 					name="name"
-					placeholder="Enter Name Here"
+					placeholder="Enter Name"
 					value={registerForm.name}
 					onChange={onChange}
 				/>
+				{formErrors.name.length > 2 ? (
+					<h4 className="error"> {formErrors.name}</h4>
+				) : null}
 			</label>
 			<br></br>
 			<label>
@@ -93,10 +123,11 @@ function RegisterForm() {
 					id="email"
 					type="email"
 					name="email"
-					placeholder="Enter Email Here"
+					placeholder="Enter Email"
 					value={registerForm.email}
 					onChange={onChange}
 				/>
+				{formErrors.email.length > 0 ? <p>{formErrors.email}</p> : null}
 			</label>
 			<br></br>
 			<label>
@@ -105,10 +136,11 @@ function RegisterForm() {
 					id="password"
 					type="text"
 					name="password"
-					placeholder="Enter Password Here"
+					placeholder="Enter Password"
 					value={registerForm.password}
 					onChange={onChange}
 				/>
+				{formErrors.password.length > 0 ? <p>{formErrors.password}</p> : null}
 			</label>
 			<br></br>
 			<button>Confirm</button>

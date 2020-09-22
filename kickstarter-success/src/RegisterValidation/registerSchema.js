@@ -1,10 +1,10 @@
 import * as yup from "yup";
 
-export default yup.object().shape({
-	username: yup
+const registerSchema = yup.object().shape({
+	name: yup
 		.string()
-		.required("Username is required")
-		.min(3, "Username must be 3 chars or longer"),
+		.required("Name is required")
+		.min(5, "Name must be 5 characters or longer"),
 	email: yup
 		.string()
 		.email("Must be a valid email")
@@ -14,3 +14,5 @@ export default yup.object().shape({
 		.required("Password is required")
 		.min(8, "Password must be 8 characters or longer"),
 });
+
+export default registerSchema;
