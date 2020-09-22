@@ -12,6 +12,10 @@ export const DELETE_CAMPAIGN = 'DELETE_CAMPAIGN';
 export const DELETE_CAMPAIGN_SUCCESS = 'DELETE_CAMPAIGN_SUCCESS';
 export const DELETE_CAMPAIGN_ERROR = 'DELETE_CAMPAIGN_ERROR';
 
+export const EDIT_CAMPAIGN = 'EDIT_CAMPAIGN';
+export const EDIT_CAMPAIGN_SUCCESS = 'EDIT_CAMPAIGN_SUCCESS';
+export const EDIT_CAMPAIGN_ERROR = 'EDIT_CAMPAIGN_ERROR';
+
 export const userInfo = () => {
     return (dispatch) => {
         dispatch({type: FETCH_USERINFO})
@@ -46,11 +50,24 @@ export const deleteCampaign = (id) => {
             axiosWithAuth()
             .delete(`/campaigns/campaign/${id}`)
             .then(res => {
-                debugger
                 dispatch({type: DELETE_CAMPAIGN_SUCCESS, payload: id})
             })
             .catch(err => {
                 dispatch({type: DELETE_CAMPAIGN_ERROR, payload: err.message})
+            })
+    }
+}
+
+export const editCampaign = (id,data) => {
+    return (dispatch) => {
+        dispatch({type: EDIT_CAMPAIGN})
+            axiosWithAuth()
+            .put(`/campaigns/campaign/${id}`, data)
+            .then(res => {
+                dispatch({type: EDIT_CAMPAIGN_SUCCESS, payload: res})
+            })
+            .catch(err => {
+                dispatch({type: EDIT_CAMPAIGN_ERROR, payload: err.message})
             })
     }
 }

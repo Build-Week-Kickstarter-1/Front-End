@@ -3,7 +3,7 @@ import { TextField, Button } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import { deleteCampaign } from '../store/actions/userActions'
+import { deleteCampaign, editCampaign } from '../store/actions/userActions'
 
 const initialCampaign = {
     category: '',
@@ -14,7 +14,7 @@ const initialCampaign = {
     successprediction: false,
 }
 
-const EditCampaign = ({deleteCampaign}) => {
+const EditCampaign = ({deleteCampaign, editCampaign}) => {
     const { id } = useParams()
     const [campaign, setCampaign] = useState(initialCampaign)
     let history = useHistory()
@@ -28,11 +28,12 @@ const EditCampaign = ({deleteCampaign}) => {
             category: campaign.category,
             currency: campaign.currency,
             goal: campaign.goal,
-            launchdate: campaign.initialCampaign,
+            launchdate: campaign.launchdate,
             name: campaign.name,
             successprediction: campaign.successprediction,
         }
-        // addCampaign(campaignData)
+        console.log(campaignData)
+        editCampaign(id, campaignData)
         history.push('/dashboard')
     }
     const cancelHandler = (e) => {
@@ -98,15 +99,15 @@ const EditCampaign = ({deleteCampaign}) => {
                 <Button type='submit' variant="contained" color="primary">
                     Save
                 </Button>
-                <Button variant="contained" color="primary" onClick={cancelHandler}>
-                    Cancel
-                </Button>
                 <Button variant="contained" color="primary" onClick={deleteHandler}>
                     Delete
+                </Button>
+                <Button variant="contained" color="primary" onClick={cancelHandler}>
+                    Cancel
                 </Button>
             </form>
         </>
     )
 }
 
-export default connect(null, {deleteCampaign})(EditCampaign)
+export default connect(null, {deleteCampaign, editCampaign})(EditCampaign)

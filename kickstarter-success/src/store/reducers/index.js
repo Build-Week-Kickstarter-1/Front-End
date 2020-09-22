@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
         case POST_NEW_CAMPAIGN:
             return {...state, loading: true, errorMessage: ''}
         case POST_NEW_CAMPAIGN_SUCCESS:
-            return {...state, userInfo: [...userInfo, action.payload], loading: false, errorMessage: ''}
+            return {...state, userInfo: [...state.userInfo, action.payload], loading: false, errorMessage: ''}
         case POST_NEW_CAMPAIGN_ERROR:
             return {...state, userInfo: [], loading: false, errorMessage: action.payload}
         case DELETE_CAMPAIGN:
