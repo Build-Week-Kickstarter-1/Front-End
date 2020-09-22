@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
 import registerSchema from "../RegisterValidation/registerSchema";
+import "../RegisterValidation/Registration.css";
 
 function RegisterForm() {
 	////////////////////// Initial Values Here  //////////////////////
@@ -102,10 +103,21 @@ function RegisterForm() {
 		});
 	}, [registerForm]);
 
+	// const axiosWithAuth = () => {
+	// 	const token = window.localStorage.getItem("token");
+	// 	return axios.create({
+	// 		headers: {
+	// 			Authorization: `Bearer ${token}`,
+	// 		},
+	// 		baseURL: "https://kickstarter-success-app.herokuapp.com",
+	// 	});
+	// };
+
+	//////////////////// Form Information  //////////////////////
 	return (
 		<form onSubmit={submitForm}>
 			<label>
-				Name:
+				<h3>Name:</h3>
 				<input
 					className="name-input"
 					id="name"
@@ -119,9 +131,8 @@ function RegisterForm() {
 					<h4 className="error"> {formErrors.name}</h4>
 				) : null}
 			</label>
-			<br></br>
 			<label>
-				Username:
+				<h3>Username:</h3>
 				<input
 					className="username-input"
 					id="username"
@@ -135,9 +146,8 @@ function RegisterForm() {
 					<h4 className="error"> {formErrors.username}</h4>
 				) : null}
 			</label>
-			<br></br>
 			<label>
-				Email:
+				<h3>Email:</h3>
 				<input
 					className="email-input"
 					id="email"
@@ -149,9 +159,8 @@ function RegisterForm() {
 				/>
 				{formErrors.email.length > 0 ? <p>{formErrors.email}</p> : null}
 			</label>
-			<br></br>
 			<label>
-				Password:
+				<h3>Password:</h3>
 				<input
 					className="password-input"
 					id="password"
@@ -163,7 +172,6 @@ function RegisterForm() {
 				/>
 				{formErrors.password.length > 0 ? <p>{formErrors.password}</p> : null}
 			</label>
-			<br></br>
 			<button disabled={buttonDisabled}>Confirm</button>
 		</form>
 
