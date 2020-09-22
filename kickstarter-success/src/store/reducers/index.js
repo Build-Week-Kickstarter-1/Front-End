@@ -6,7 +6,7 @@ import {
 
 export const initialState = {
     userInfo: [],
-    loading: false,
+    loading: true,
     errorMessage: ''
 }
 
@@ -15,9 +15,9 @@ export default (state = initialState, action) => {
         case FETCH_USERINFO:
             return {...state, userInfo: [], loading: true, errorMessage: ''}
         case FETCH_USERINFO_SUCCESS:
-            return {...state, userInfo: action.payload, loading: true, errorMessage: ''}
+            return {...state, userInfo: action.payload, loading: false, errorMessage: ''}
         case FETCH_USERINFO_ERROR:
-            return {...state, userInfo: [], loading: true, errorMessage: action.payload}
+            return {...state, userInfo: [], loading: false, errorMessage: action.payload}
         default:
             return state
     }
