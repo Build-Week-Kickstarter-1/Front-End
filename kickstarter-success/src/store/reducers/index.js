@@ -2,12 +2,12 @@ import {
     FETCH_USERINFO,
     FETCH_USERINFO_SUCCESS,
     FETCH_USERINFO_ERROR,
-} from '../actions'
+} from '../actions/userActions'
 
-const initialState = {
+export const initialState = {
     userInfo: [],
     loading: false,
-    errorMessage: '',
+    errorMessage: ''
 }
 
 export default (state = initialState, action) => {
@@ -18,5 +18,7 @@ export default (state = initialState, action) => {
             return {...state, userInfo: action.payload, loading: true, errorMessage: ''}
         case FETCH_USERINFO_ERROR:
             return {...state, userInfo: [], loading: true, errorMessage: action.payload}
+        default:
+            return state
     }
 }

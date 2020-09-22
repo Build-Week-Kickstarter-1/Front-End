@@ -9,7 +9,6 @@ import reducer from './store/reducers/index'
 import './index.css';
 import App from './App';
 
-// const reducer = () => {}
 const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(
