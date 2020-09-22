@@ -15,10 +15,9 @@ const Campaigns = ({userInfo}) => {
 
     const history = useHistory()
     const user = useSelector(state => state)
-    
     useEffect(()=>{
         userInfo()
-    },[user.length])
+    },[])
     if (user.errorMessage === "Request failed with status code 401"){
         window.localStorage.removeItem('token')
         history.push('/login')

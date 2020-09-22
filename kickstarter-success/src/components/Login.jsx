@@ -3,12 +3,13 @@ import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
+const initialLogin = {
+  username: '',
+  password: '',
+}
+
 const Login = () => {
 
-  const initialLogin = {
-    username: '',
-    password: '',
-  }
   const [login, setLogin] = useState(initialLogin)
   const [isLoading, setIsLoading] = useState(false)
   let history = useHistory()
@@ -57,7 +58,7 @@ const Login = () => {
             type='password'
         />
         {isLoading ? <CircularProgress /> : ''}
-        <Button type='submit' >
+        <Button type='submit' variant="contained" color="primary">
             Login
         </Button>
       </form>

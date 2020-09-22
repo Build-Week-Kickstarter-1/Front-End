@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom';
 const Dashboard = () => {
     const history = useHistory()
     const CampaignsCreator = (e) => {
-        e.preventDefualt()
-        history.push('/add')
+        e.preventDefault()
+        history.push('/new-campaign')
     }
     return (
         <>
