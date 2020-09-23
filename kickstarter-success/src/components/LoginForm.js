@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
 import schema from "../validation/loginSchema";
+import history from "../utils/history";
 
 const initialFormValues = {
   username: "",
@@ -13,7 +14,7 @@ const initialFormErrors = {
   password: "",
 };
 
-export default function LoginForm(props) {
+export default function LoginForm() {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
@@ -68,7 +69,7 @@ export default function LoginForm(props) {
       .then((res) => {
         console.log(res.data);
         localStorage.setItem("token", res.data.access_token);
-        props.history.push("/dashboard");
+        history.push("/dashboard");
       })
       .catch((err) => {
         console.log(err);
