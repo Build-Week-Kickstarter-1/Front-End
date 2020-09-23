@@ -11,6 +11,7 @@ import {
     EDIT_CAMPAIGN,
     EDIT_CAMPAIGN_SUCCESS,
     EDIT_CAMPAIGN_ERROR,
+    LOGOUT,
 } from '../actions/userActions'
 
 export const initialState = {
@@ -45,11 +46,7 @@ export default (state = initialState, action) => {
         case EDIT_CAMPAIGN:
             return {...state, loading: true, errorMessage: ''}
         case EDIT_CAMPAIGN_SUCCESS:
-            console.log('in reducer')
             return {...state, userInfo: state.userInfo.map(info => {
-                    console.log('mapping')
-                    console.log(info.campaignid)
-                    console.log(action.payload.campaignid)
                     if (info.campaignid === action.payload.campaignid){
                         return action.payload
                     } else {
@@ -58,6 +55,8 @@ export default (state = initialState, action) => {
                 }), loading: false, errorMessage: ''}
         case EDIT_CAMPAIGN_ERROR:
             return {...state, loading: false, errorMessage: action.payload}
+        case LOGOUT:
+            return {...state,  userInfo: [], username: '', loading: false, errorMessage: action.payload}
         default:
             return state
     }

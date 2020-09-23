@@ -16,6 +16,8 @@ export const EDIT_CAMPAIGN = 'EDIT_CAMPAIGN';
 export const EDIT_CAMPAIGN_SUCCESS = 'EDIT_CAMPAIGN_SUCCESS';
 export const EDIT_CAMPAIGN_ERROR = 'EDIT_CAMPAIGN_ERROR';
 
+export const LOGOUT = 'LOGOUT';
+
 export const userInfo = () => {
     return (dispatch) => {
         dispatch({type: FETCH_USERINFO})
@@ -65,7 +67,6 @@ export const editCampaign = (id,data) => {
             axiosWithAuth()
             .put(`/campaigns/campaign/${id}`, data)
             .then(res => {
-                console.log(res)
                 dispatch({type: EDIT_CAMPAIGN_SUCCESS, payload: res.data})
             })
             .catch(err => {
@@ -73,3 +74,7 @@ export const editCampaign = (id,data) => {
             })
     }
 }
+
+// export const logOut = () => dispatch => {
+//     dispatch
+// }

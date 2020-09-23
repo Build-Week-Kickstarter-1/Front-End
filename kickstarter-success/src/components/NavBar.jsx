@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom';
 import {
   Collapse,
@@ -15,13 +15,15 @@ import {
 } from 'reactstrap';
 
 import Avatar from 'react-avatar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import {LOGOUT} from '../store/actions/userActions'
 
 const NavBar = () => {
     const username = useSelector(state => state.username)
     const history = useHistory();
-    const token = window.localStorage.getItem('token')
+    const dispatch = useDispatch()
+    const [token, setToken] = useState()
     const [isOpen, setIsOpen] = useState(false);
   
     const toggle = () => setIsOpen(!isOpen);
@@ -31,12 +33,14 @@ const NavBar = () => {
             .get('/logout')
             .then(res => {
                 window.localStorage.removeItem('token')
+                dispatch({type: LOGOUT, payload: 'you have sucessfully logged out'})
                 history.push('/login')
             })
             .catch(err => {})
-        
-        
-      }
+    }
+    useEffect(()=>{
+        setToken(window.localStorage.getItem('token'))
+    },[username])
     return (
         <Navbar color="light" light expand="md">
             <NavbarBrand onClick={()=>history.push('/')}>CATALYST</NavbarBrand>
