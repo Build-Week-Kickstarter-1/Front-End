@@ -74,6 +74,7 @@ function RegisterForm() {
 		};
 		console.log(newOrder);
 		newUserSubmit(newOrder);
+		setRegisterForm(initialRegisterFormValues);
 	};
 
 	const submitForm = (event) => {
