@@ -78,7 +78,7 @@ export default function LoginForm() {
 
   return (
     <div className="login-form">
-      <h2>Login</h2>
+      <h1>Login</h1>
       <form onSubmit={submit}>
         <div className="errors-container">
           <p>{formErrors.username}</p>
