@@ -16,6 +16,7 @@ import {
 
 import Avatar from 'react-avatar';
 import { useSelector } from 'react-redux';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const NavBar = () => {
     const username = useSelector(state => state.username)
@@ -24,8 +25,17 @@ const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
   
     const toggle = () => setIsOpen(!isOpen);
-    const clickHandler = (e) => {
+    const logoutHandler = (e) => {
         e.preventDefault()
+        axiosWithAuth()
+            .get('/logout')
+            .then(res => {
+                window.localStorage.removeItem('token')
+                history.push('/login')
+            })
+            .catch(err => {})
+        
+        
       }
     return (
         <Navbar color="light" light expand="md">
@@ -51,13 +61,13 @@ const NavBar = () => {
                     (  
                         <UncontrolledDropdown>
                             <DropdownToggle nav>
-                                <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true} size='3rem' name={username} onClick={clickHandler}/>
+                                <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true} size='3rem' name={username}/>
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem>
                                     Profile
                                 </DropdownItem>
-                                <DropdownItem onClick={''}>
+                                <DropdownItem onClick={logoutHandler}>
                                     Sign Out
                                 </DropdownItem>
                             </DropdownMenu>
