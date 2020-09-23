@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 export default function Dashboard() {
   const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://kickstarter-success-app.herokuapp.com/users/myinfo")
+    axiosWithAuth()
+      .get("/users/myinfo")
       .then((res) => {
         setUserInfo(res.data);
-        console.log(userInfo);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [userInfo]);
+  }, []);
 
   return (
     <div>
@@ -23,9 +23,9 @@ export default function Dashboard() {
       <Link to="/campaign">
         <button>Create a Campaign</button>
       </Link>
-      {userInfo.map((campaign) => {
+      {/* {userInfo.map((campaign) => {
         return <div>{campaign}</div>;
-      })}
+      })} */}
     </div>
   );
 }
