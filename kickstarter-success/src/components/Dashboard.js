@@ -16,8 +16,6 @@ export default function Dashboard() {
       });
   }, []);
 
-  console.log(userInfo);
-
   return (
     <div>
       <h2>Dashboard</h2>
