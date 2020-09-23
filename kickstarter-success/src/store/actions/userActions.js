@@ -22,7 +22,8 @@ export const userInfo = () => {
             axiosWithAuth()
             .get('/users/myinfo')
             .then(res => {
-                dispatch({type: FETCH_USERINFO_SUCCESS, payload: res.data.campaigns})
+                console.log(res)
+                dispatch({type: FETCH_USERINFO_SUCCESS, payload: res.data})
             })
             .catch(err => {
                 dispatch({type: FETCH_USERINFO_ERROR, payload: err.message})
@@ -64,7 +65,8 @@ export const editCampaign = (id,data) => {
             axiosWithAuth()
             .put(`/campaigns/campaign/${id}`, data)
             .then(res => {
-                dispatch({type: EDIT_CAMPAIGN_SUCCESS, payload: res})
+                console.log(res)
+                dispatch({type: EDIT_CAMPAIGN_SUCCESS, payload: res.data})
             })
             .catch(err => {
                 dispatch({type: EDIT_CAMPAIGN_ERROR, payload: err.message})

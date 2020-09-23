@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { TextField, Button } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { deleteCampaign, editCampaign } from '../store/actions/userActions'
 
 const initialCampaign = {
+    campaignid: '',
     category: '',
     currency: '',
     goal: '',
@@ -25,6 +26,7 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
         e.preventDefault()
         if (!campaign.name || !campaign.currency || !campaign.goal || !campaign.category) return 
         const campaignData = {
+            campaignid: campaign.campaignid,
             category: campaign.category,
             currency: campaign.currency,
             goal: campaign.goal,
@@ -32,7 +34,6 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
             name: campaign.name,
             successprediction: campaign.successprediction,
         }
-        console.log(campaignData)
         editCampaign(id, campaignData)
         history.push('/dashboard')
     }
