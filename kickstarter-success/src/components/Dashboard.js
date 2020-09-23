@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Dashboard() {
-  const [quotes, setQuotes] = useState();
+  const [userInfo, setUserInfo] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://kickstarter-success-app.herokuapp.com/campaigns/all")
+      .get("https://kickstarter-success-app.herokuapp.com/users/myinfo")
       .then((res) => {
-        setQuotes(res.data);
+        setUserInfo(res.data);
+        console.log(userInfo);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userInfo]);
 
   return (
     <div>
@@ -22,6 +23,9 @@ export default function Dashboard() {
       <Link to="/campaign">
         <button>Create a Campaign</button>
       </Link>
+      {userInfo.map((campaign) => {
+        return <div>{campaign}</div>;
+      })}
     </div>
   );
 }
