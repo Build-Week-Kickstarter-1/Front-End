@@ -9,23 +9,35 @@ export default function Dashboard() {
     axiosWithAuth()
       .get("/users/myinfo")
       .then((res) => {
-        setUserInfo(res.data);
-        console.log(res.data);
+        setUserInfo(res.data.campaigns);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  console.log(userInfo);
+
   return (
     <div>
       <h2>Dashboard</h2>
+      <br />
+      {userInfo.map((campaign) => {
+        return (
+          <div>
+            <h3>{campaign.name}</h3>
+            <p>{campaign.category}</p>
+            <p>
+              {campaign.goal} {campaign.currency}
+            </p>
+            <p>{campaign.launchdate}</p>
+            <br />
+          </div>
+        );
+      })}
       <Link to="/campaign">
         <button>Create a Campaign</button>
       </Link>
-      {/* {userInfo.map((campaign) => {
-        return <div>{campaign}</div>;
-      })} */}
     </div>
   );
 }
