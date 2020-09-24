@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from 'react-redux'
 import { TextField, Button, CircularProgress, FormControl, InputLabel, Select ,MenuItem, makeStyles} from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
@@ -6,7 +6,6 @@ import axios from 'axios'
 import { categories } from '../assets/categories'
 import { addCampaign } from '../store/actions/userActions';
 import {country_code} from '../assets/countryCode'
-import { axiosWithAuth } from "../utils/axiosWithAuth";
 const initialCampaign = {
     name: '',
     blurb: '',
@@ -29,13 +28,14 @@ const AddCampaign = ({addCampaign}) => {
     let history = useHistory()
     const classes = useStyles();
     const inputHandler = (e) => {
-        setCampaign({...campaign, [e.target.name]: e.target.value})
+        setCampaign({...campaign, [e.target.name]: e.target.value, successprediction: ''})
     }
     const submitHandler = (e) => {
         e.preventDefault()
         if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
         let today = new Date();
         let startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() ;
+        let time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
         let endDate = today.getFullYear() + '-' + (today.getMonth() + 3) + '-' + 1;
         const campaignData = {
             name: campaign.name,
@@ -43,8 +43,8 @@ const AddCampaign = ({addCampaign}) => {
             category: campaign.category,
             country: campaign.country,
             goal: campaign.goal,
-            launchdate: startDate,
-            deadline: endDate,
+            launchdate: startDate + ' ' + time,
+            deadline: endDate + ' ' + time,
             successprediction: campaign.successprediction,
         }
         addCampaign(campaignData)
@@ -65,10 +65,9 @@ const AddCampaign = ({addCampaign}) => {
             launched: startDate + ' ' + time,
             deadline: endDate + ' ' + time,
         }
-        console.log(campaignData)
         axios.post('https://ds-ks-api-september-2020.herokuapp.com/predict', campaignData)
             .then(res => {
-                setCampaign({...campaign, successprediction: res.data})
+                setCampaign({...campaign, successprediction: res.data.prediction})
             })
             .catch(err => {
                 debugger
@@ -83,6 +82,15 @@ const AddCampaign = ({addCampaign}) => {
 
         <>
             <h1>New Campaign</h1>
+            <TextField
+                    label='Success Prediction'
+                    variant="outlined"
+                    name='successprediction'
+                    value={campaign.successprediction}
+                    InputProps={{
+                        readOnly: true,
+                      }}
+                />
             <form onSubmit={submitHandler}>
                 <TextField
                     label='Name'
