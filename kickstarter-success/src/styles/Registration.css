@@ -13,14 +13,14 @@ code {
 }
 
 html {
-	font-size: 75%;
-	background-color: teal;
+	font-size: 85%;
+	background-color: #f4a460;
 }
 
-.App {
+/* .App {
 	font-family: sans-serif;
 	text-align: center;
-}
+} */
 
 form {
 	display: flex;
@@ -95,7 +95,7 @@ button {
 	outline: none;
 	background-color: #4dd0e1;
 	background-image: linear-gradient(to right, #4dd0e1, #1ee7e2);
-	color: #fff;
+	color: purple;
 	cursor: pointer;
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
@@ -121,8 +121,18 @@ button:disabled {
 
 h1 {
 	margin-top: 50%;
+	padding: 50px;
+	margin-left: 2%;
 }
 
 .register-button {
 	margin-right: 50px;
+}
+
+/* .nav-bar {
+	background-color: teal;
+} */
+
+h2 {
+	margin-right: 1%;
 }
