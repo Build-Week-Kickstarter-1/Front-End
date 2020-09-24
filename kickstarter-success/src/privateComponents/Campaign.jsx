@@ -12,10 +12,11 @@ const Campaign = ({info}) => {
         <TableRow key={info.campaignid} onClick={editHandler} >
             <TableCell >{info.campaignid}</TableCell>
             <TableCell align="right">{info.name}</TableCell>
-            <TableCell align="right">{info.category}</TableCell>
-            <TableCell align="right">{info.goal}</TableCell>
-            <TableCell align="right">{info.currency}</TableCell>
+            <TableCell align="right">{info.blurb}</TableCell>
+            <TableCell align="right">{info.country}</TableCell>
+            <TableCell align="right">${info.goal}</TableCell>
             <TableCell align="right">{info.launchdate}</TableCell>
+            <TableCell align="right">{info.deadline}</TableCell>
             <TableCell align="right">{info.successprediction ? 'True' : 'False'}</TableCell>
         </TableRow>
     )

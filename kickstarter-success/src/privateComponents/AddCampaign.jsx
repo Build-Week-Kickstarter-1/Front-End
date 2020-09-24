@@ -1,42 +1,78 @@
 import React, {useState} from "react";
 import {connect} from 'react-redux'
-import { TextField, Button, CircularProgress } from '@material-ui/core';
+import { TextField, Button, CircularProgress, FormControl, InputLabel, Select ,MenuItem, makeStyles} from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
-
+import axios from 'axios'
+import { categories } from '../assets/categories'
 import { addCampaign } from '../store/actions/userActions';
-
+import {country_code} from '../assets/countryCode'
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 const initialCampaign = {
+    name: '',
+    blurb: '',
     category: '',
-    currency: '',
+    country: '',
     goal: '',
     launchdate: '',
-    name: '',
-    successprediction: false,
+    deadline: '',
+    successprediction: '',
 }
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      minWidth: 160,
+    },
+  }));
 
 const AddCampaign = ({addCampaign}) => {
     const [campaign, setCampaign] = useState(initialCampaign)
     let history = useHistory()
+    const classes = useStyles();
     const inputHandler = (e) => {
         setCampaign({...campaign, [e.target.name]: e.target.value})
     }
     const submitHandler = (e) => {
         e.preventDefault()
-        if (!campaign.name || !campaign.currency || !campaign.goal || !campaign.category) return 
+        if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
         let today = new Date();
-        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        let time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        let dateTime = date + ' ' + time;
+        let startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() ;
+        let endDate = today.getFullYear() + '-' + (today.getMonth() + 3) + '-' + 1;
         const campaignData = {
-            category: campaign.category,
-            currency: campaign.currency,
-            goal: campaign.goal,
-            launchdate: dateTime,
             name: campaign.name,
+            blurb: campaign.blurb,
+            category: campaign.category,
+            country: campaign.country,
+            goal: campaign.goal,
+            launchdate: startDate,
+            deadline: endDate,
             successprediction: campaign.successprediction,
         }
         addCampaign(campaignData)
         history.push('/dashboard')
+    }
+    const predictHandler = () => {
+        if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
+        let today = new Date();
+        let startDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+        let endDate = today.getFullYear() + '-' + (today.getMonth() + 3) + '-' + 1;
+        const campaignData = {
+            name: campaign.name,
+            blurb: campaign.blurb,
+            category: campaign.category,
+            country: campaign.country,
+            goal: campaign.goal,
+            launched: startDate + ' ' + time,
+            deadline: endDate + ' ' + time,
+        }
+        console.log(campaignData)
+        axios.post('https://ds-ks-api-september-2020.herokuapp.com/predict', campaignData)
+            .then(res => {
+                setCampaign({...campaign, successprediction: res.data})
+            })
+            .catch(err => {
+                debugger
+            })
     }
     const cancelHandler = (e) => {
         e.preventDefault()
@@ -56,22 +92,38 @@ const AddCampaign = ({addCampaign}) => {
                     onChange={inputHandler}
                     type='text'
                 />
-                <TextField
-                    label='Category'
-                    variant="outlined"
-                    name='category'
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel >Category</InputLabel>
+                    <Select
                     value={campaign.category}
+                    name='category'
                     onChange={inputHandler}
-                    type='text'
-                />
-                <TextField
-                    label='Currency'
-                    variant="outlined"
-                    name='currency'
-                    value={campaign.currency}
+                    label="Category"
+                    >
+                    <MenuItem value="">
+                        <em>--Select--</em>
+                    </MenuItem>
+                    {categories.map(category => {
+                        return <MenuItem value={category}>{category}</MenuItem>
+                    })}
+                    </Select>
+                </FormControl>
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel >Country</InputLabel>
+                    <Select
+                    value={campaign.country}
+                    name='country'
                     onChange={inputHandler}
-                    type='text'
-                />
+                    label="Country"
+                    >
+                    <MenuItem value="">
+                        <em>--Select--</em>
+                    </MenuItem>
+                    {country_code.map(code => {
+                        return <MenuItem value={Object.values(code)[0]}>{Object.keys(code)}</MenuItem>
+                    })}
+                    </Select>
+                </FormControl>
                 <TextField
                     label='Goal'
                     variant="outlined"
@@ -80,9 +132,22 @@ const AddCampaign = ({addCampaign}) => {
                     onChange={inputHandler}
                     type='number'
                 />
+                <TextField
+                    multiline
+                    rows={4}
+                    label='Blurb'
+                    variant="outlined"
+                    name='blurb'
+                    value={campaign.blurb}
+                    onChange={inputHandler}
+                    type='text'
+                />
                 {/* {isLoading ? <CircularProgress /> : ''} */}
                 <Button type='submit' variant="contained" color="primary">
                     Add
+                </Button>
+                <Button variant="contained" color="primary" onClick={predictHandler}>
+                    Predict Success
                 </Button>
                 <Button variant="contained" color="primary" onClick={cancelHandler}>
                     Cancel

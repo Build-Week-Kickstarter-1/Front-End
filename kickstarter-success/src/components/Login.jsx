@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch } from "react-redux";
+import { ERROR } from '../store/actions/userActions';
 
 const initialLogin = {
   username: '',
@@ -13,12 +15,14 @@ const Login = () => {
   const [login, setLogin] = useState(initialLogin)
   const [isLoading, setIsLoading] = useState(false)
   let history = useHistory()
+  let dispatch = useDispatch()
   const inputHandler = (e) => {
   setLogin({...login, [e.target.name]: e.target.value})
   }
   const submitHandler = (e) => {
   e.preventDefault()
   setIsLoading(true)
+    dispatch({type: ERROR, payload: ''})
     axios
       .post('https://kickstarter-success-app.herokuapp.com/login', `grant_type=password&username=${login.username}&password=${login.password}`, {
         headers: {
@@ -27,14 +31,14 @@ const Login = () => {
         }
       })
       .then(response => {
-          window.localStorage.setItem('token', response.data.access_token)
-          history.push('./dashboard')
-          setLogin(initialLogin)
-          setIsLoading(false)
+        window.localStorage.setItem('token', response.data.access_token)
+        history.push('./dashboard')
+        setLogin(initialLogin)
+        setIsLoading(false)
       })
       .catch(error => {
-          debugger
-          setIsLoading(false)
+        dispatch({type: ERROR, payload: 'Wrong username or password. Try again'})
+        setIsLoading(false)
       })
   }
   return (

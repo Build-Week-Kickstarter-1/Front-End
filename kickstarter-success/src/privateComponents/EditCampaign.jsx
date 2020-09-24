@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, CircularProgress } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { deleteCampaign, editCampaign } from '../store/actions/userActions'
 
@@ -22,6 +22,8 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
     const inputHandler = (e) => {
         setCampaign({...campaign, [e.target.name]: e.target.value})
     }
+    const loading = useSelector(state => state.loading)
+    const data = useSelector(state => state.userInfo)
     const submitHandler = (e) => {
         e.preventDefault()
         if (!campaign.name || !campaign.currency || !campaign.goal || !campaign.category) return 
@@ -96,7 +98,7 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
                     onChange={inputHandler}
                     type='number'
                 />
-                {/* {isLoading ? <CircularProgress /> : ''} */}
+                {loading ? <CircularProgress /> : ''}
                 <Button type='submit' variant="contained" color="primary">
                     Save
                 </Button>

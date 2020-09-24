@@ -17,7 +17,7 @@ import {
 import Avatar from 'react-avatar';
 import { useSelector, useDispatch } from 'react-redux';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import {LOGOUT} from '../store/actions/userActions'
+import {LOGOUT, ERROR} from '../store/actions/userActions'
 
 const NavBar = () => {
     const username = useSelector(state => state.username)
@@ -40,7 +40,16 @@ const NavBar = () => {
     }
     useEffect(()=>{
         setToken(window.localStorage.getItem('token'))
+        if (!token) {
+            history.push('/login')
+        }
     },[username])
+
+    const urlChangeHandler = (path) => {
+        dispatch({type: ERROR, payload: ''})
+        history.push(`/${path}`)
+
+    }
     return (
         <Navbar color="light" light expand="md">
             <NavbarBrand onClick={()=>history.push('/')}>CATALYST</NavbarBrand>
@@ -49,14 +58,14 @@ const NavBar = () => {
                 <Nav className="mr-auto" navbar>
                     {token ? 
                     <NavItem>
-                        <NavLink onClick={()=>history.push('/dashboard')}>Dashboard</NavLink>
+                        <NavLink onClick={() => urlChangeHandler('dashboard')}>Dashboard</NavLink>
                     </NavItem> :
                     <>
                         <NavItem>
-                            <NavLink onClick={()=>history.push('/login')}>Login</NavLink>
+                            <NavLink onClick={()=> urlChangeHandler('login')}>Login</NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink onClick={()=>history.push('/register')}>Register</NavLink>
+                            <NavLink onClick={()=> urlChangeHandler('register')}>Register</NavLink>
                         </NavItem>
                     </>
                     }
@@ -69,7 +78,7 @@ const NavBar = () => {
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem>
-                                    Profile
+                                    View Profile
                                 </DropdownItem>
                                 <DropdownItem onClick={logoutHandler}>
                                     Sign Out

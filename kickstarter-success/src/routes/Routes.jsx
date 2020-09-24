@@ -14,6 +14,7 @@ const Routes = () => {
             <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             <PrivateRoute exact path='/new-campaign' component={AddCampaign}/>
             <PrivateRoute exact path='/campaign/:id' component={EditCampaign}/>
+            {/* <PrivateRoute exact path='/campaign/:id' component={EditCampaign}/> */}
         </Switch>
     )
 }

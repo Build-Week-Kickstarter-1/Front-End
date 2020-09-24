@@ -18,6 +18,7 @@ const Campaigns = ({userInfo}) => {
     useEffect(()=>{
         userInfo()
     },[])
+    console.log(user)
     if (user.errorMessage === "Request failed with status code 401"){
         window.localStorage.removeItem('token')
         history.push('/login')
@@ -34,10 +35,11 @@ const Campaigns = ({userInfo}) => {
                             <TableRow>
                                 <TableCell>Campaingn ID</TableCell>
                                 <TableCell align="right">Name</TableCell>
-                                <TableCell align="right">Category</TableCell>
+                                <TableCell align="right">Blurb</TableCell>
+                                <TableCell align="right">Country</TableCell>
                                 <TableCell align="right">Goal</TableCell>
-                                <TableCell align="right">Currency</TableCell>
                                 <TableCell align="right">Launch Date</TableCell>
+                                <TableCell align="right">Deadline</TableCell>
                                 <TableCell align="right">Success? (Prediction)</TableCell>
                             </TableRow>
                         </TableHead>
