@@ -1,24 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import { TextField, Button, CircularProgress } from '@material-ui/core'
+import { TextField, Button, CircularProgress, FormControl, InputLabel, Select ,MenuItem, makeStyles } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
+import axios from 'axios'
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { deleteCampaign, editCampaign } from '../store/actions/userActions'
+import {country_code} from '../assets/countryCode'
+import { categories } from '../assets/categories'
 
 const initialCampaign = {
-    campaignid: '',
+    name: '',
+    blurb: '',
     category: '',
-    currency: '',
+    country: '',
     goal: '',
     launchdate: '',
-    name: '',
-    successprediction: false,
+    deadline: '',
+    successprediction: '',
 }
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      minWidth: 160,
+    },
+  }));
 
 const EditCampaign = ({deleteCampaign, editCampaign}) => {
     const { id } = useParams()
     const [campaign, setCampaign] = useState(initialCampaign)
     let history = useHistory()
+    const classes = useStyles();
     const inputHandler = (e) => {
         setCampaign({...campaign, [e.target.name]: e.target.value})
     }
@@ -26,17 +37,8 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
     const data = useSelector(state => state.userInfo)
     const submitHandler = (e) => {
         e.preventDefault()
-        if (!campaign.name || !campaign.currency || !campaign.goal || !campaign.category) return 
-        const campaignData = {
-            campaignid: campaign.campaignid,
-            category: campaign.category,
-            currency: campaign.currency,
-            goal: campaign.goal,
-            launchdate: campaign.launchdate,
-            name: campaign.name,
-            successprediction: campaign.successprediction,
-        }
-        editCampaign(id, campaignData)
+        if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
+        editCampaign(id, campaign)
         history.push('/dashboard')
     }
     const cancelHandler = (e) => {
@@ -49,6 +51,26 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
         e.preventDefault()
         deleteCampaign(id)
         history.push('/dashboard')
+    }
+    const predictHandler = () => {
+        if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
+        let today = new Date();
+        const campaignData = {
+            name: campaign.name,
+            blurb: campaign.blurb,
+            category: campaign.category,
+            country: campaign.country,
+            goal: campaign.goal,
+            launched: campaign.launchdate,
+            deadline: campaign.deadline,
+        }
+        axios.post('https://ds-ks-api-september-2020.herokuapp.com/predict', campaignData)
+            .then(res => {
+                setCampaign({...campaign, successprediction: res.data.prediction})
+            })
+            .catch(err => {
+                debugger
+            })
     }
 
     useEffect(()=> {
@@ -65,6 +87,15 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
     return (
         <>
             <h1>Edit Campaign</h1>
+            <TextField
+                    label='Success Prediction'
+                    variant="outlined"
+                    name='successprediction'
+                    value={campaign.successprediction}
+                    InputProps={{
+                        readOnly: true,
+                      }}
+                />
             <form onSubmit={submitHandler}>
                 <TextField
                     label='Name'
@@ -74,22 +105,38 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
                     onChange={inputHandler}
                     type='text'
                 />
-                <TextField
-                    label='Category'
-                    variant="outlined"
-                    name='category'
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel >Category</InputLabel>
+                    <Select
                     value={campaign.category}
+                    name='category'
                     onChange={inputHandler}
-                    type='text'
-                />
-                <TextField
-                    label='Currency'
-                    variant="outlined"
-                    name='currency'
-                    value={campaign.currency}
+                    label="Category"
+                    >
+                    <MenuItem value="">
+                        <em>--Select--</em>
+                    </MenuItem>
+                    {categories.map(category => {
+                        return <MenuItem value={category}>{category}</MenuItem>
+                    })}
+                    </Select>
+                </FormControl>
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel >Country</InputLabel>
+                    <Select
+                    value={campaign.country}
+                    name='country'
                     onChange={inputHandler}
-                    type='text'
-                />
+                    label="Country"
+                    >
+                    <MenuItem value="">
+                        <em>--Select--</em>
+                    </MenuItem>
+                    {country_code.map(code => {
+                        return <MenuItem value={Object.values(code)[0]}>{Object.keys(code)}</MenuItem>
+                    })}
+                    </Select>
+                </FormControl>
                 <TextField
                     label='Goal'
                     variant="outlined"
@@ -98,9 +145,22 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
                     onChange={inputHandler}
                     type='number'
                 />
+                <TextField
+                    multiline
+                    rows={4}
+                    label='Blurb'
+                    variant="outlined"
+                    name='blurb'
+                    value={campaign.blurb}
+                    onChange={inputHandler}
+                    type='text'
+                />
                 {loading ? <CircularProgress /> : ''}
                 <Button type='submit' variant="contained" color="primary">
                     Save
+                </Button>
+                <Button variant="contained" color="primary" onClick={predictHandler}>
+                    Predict Success
                 </Button>
                 <Button variant="contained" color="primary" onClick={deleteHandler}>
                     Delete
