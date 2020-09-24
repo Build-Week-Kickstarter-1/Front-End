@@ -80,7 +80,9 @@ export default function LoginForm() {
 
 	return (
 		<div className="login-form">
-			<img src={Kickstarter} alt="logo" />
+			<div className="logo">
+				<img src={Kickstarter} alt="logo" />
+			</div>
 			<h2>Login</h2>
 			<form onSubmit={submit}>
 				<div className="errors-container">

@@ -122,7 +122,7 @@ button:disabled {
 h1 {
 	margin-top: 50%;
 	padding: 50px;
-	margin-left: 2%;
+	margin-left: 5%;
 }
 
 .register-button {
@@ -135,4 +135,25 @@ h1 {
 
 h2 {
 	margin-right: 1%;
+}
+
+.dashboard h2 {
+	font-size: 60px;
+	margin-left: 1.2%;
+	text-decoration: underline;
+}
+
+.dashboard h3 {
+	font-size: 25px;
+	text-decoration: underline;
+}
+
+.dashboard p {
+	font-size: 20px;
+}
+
+nav a {
+	font-size: 20px;
+	color: teal;
+	font-family: sans-serif;
 }

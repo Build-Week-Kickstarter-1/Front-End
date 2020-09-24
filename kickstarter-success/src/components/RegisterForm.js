@@ -3,7 +3,6 @@ import axios from "axios";
 import * as yup from "yup";
 import registerSchema from "../validation/registerSchema";
 import "../styles/Registration.css";
-import Kickstarter from "../styles/Assets/Kickstarter.jpg";
 
 function RegisterForm() {
 	////////////////////// Initial Values Here  //////////////////////
