@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {connect, useSelector} from 'react-redux'
+import {connect, useSelector, useDispatch} from 'react-redux'
 import { TextField, Button, CircularProgress, FormControl, InputLabel, Select ,MenuItem, makeStyles} from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
@@ -29,6 +29,7 @@ const AddCampaign = ({addCampaign}) => {
     const [campaign, setCampaign] = useState(initialCampaign)
     let history = useHistory()
     const loading = useSelector(state => state.loading)
+    let dispatch = useDispatch()
     const classes = useStyles();
     const inputHandler = (e) => {
         setCampaign({...campaign, [e.target.name]: e.target.value, successprediction: ''})
@@ -73,7 +74,7 @@ const AddCampaign = ({addCampaign}) => {
                 setCampaign({...campaign, successprediction: res.data.prediction})
             })
             .catch(err => {
-                debugger
+                dispatch({type: ERROR, payload: "That wasn't suppose to happen, try again"})
             })
     }
     const cancelHandler = (e) => {

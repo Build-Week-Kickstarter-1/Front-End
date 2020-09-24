@@ -47,7 +47,6 @@ export default (state = initialState, action) => {
         case EDIT_CAMPAIGN:
             return {...state, loading: true, errorMessage: ''}
         case EDIT_CAMPAIGN_SUCCESS:
-            console.log(state.errorMessage)
             return {...state, userInfo: state.userInfo.map(info => {
                     if (info.campaignid == action.payload.campaignid){
                         return action.payload

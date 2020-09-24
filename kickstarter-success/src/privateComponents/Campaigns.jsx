@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {userInfo} from '../store/actions/userActions'
-import {CircularProgress, TableContainer, Paper, makeStyles, Table, TableHead, TableCell, TableRow, TableBody} from '@material-ui/core'
+import {CircularProgress, TextField, TableContainer, Paper, makeStyles, Table, TableHead, TableCell, TableRow, TableBody} from '@material-ui/core'
 import Campaign from './Campaign'
 
 const useStyles = makeStyles({
@@ -15,18 +15,26 @@ const Campaigns = ({userInfo}) => {
 
     const history = useHistory()
     const user = useSelector(state => state)
-    useEffect(()=>{
-        userInfo()
-    },[])
+    const [search, setSearch] = useState('')
     if (user.errorMessage === "Request failed with status code 401"){
         window.localStorage.removeItem('token')
         history.push('/login')
     }
-
     const classes = useStyles();
-
+    const filter = user.userInfo.filter( campaign => {
+        return campaign.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+    })
+    useEffect(()=>{
+        userInfo()
+    },[])
     return (
         <>
+            <TextField
+                label='Search Campaign'
+                variant="outlined"
+                onChange={(e)=>setSearch(e.target.value)}
+                value={search}
+            />
             {user.loading ? <CircularProgress color="secondary" /> : 
                 (<TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
@@ -43,7 +51,7 @@ const Campaigns = ({userInfo}) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {user.userInfo.map(campaign => <Campaign info={campaign}/>)}
+                            {filter.map(campaign => <Campaign info={campaign}/>)}
                         </TableBody>
                     </Table>
                 </TableContainer>)}
