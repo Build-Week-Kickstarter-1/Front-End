@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { TextField, Button, CircularProgress, FormControl, InputLabel, Select ,MenuItem, makeStyles } from '@material-ui/core'
 import { useHistory, useParams } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { deleteCampaign, editCampaign } from '../store/actions/userActions'
 import {country_code} from '../assets/countryCode'
 import { categories } from '../assets/categories'
+import { ERROR } from '../store/actions/userActions';
 
 const initialCampaign = {
     name: '',
@@ -29,16 +30,17 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
     const { id } = useParams()
     const [campaign, setCampaign] = useState(initialCampaign)
     let history = useHistory()
+    let dispatch = useDispatch()
     const classes = useStyles();
     const inputHandler = (e) => {
-        setCampaign({...campaign, [e.target.name]: e.target.value})
+        setCampaign({...campaign, [e.target.name]: e.target.value, successprediction: ''})
     }
     const loading = useSelector(state => state.loading)
     const data = useSelector(state => state.userInfo)
     const submitHandler = (e) => {
         e.preventDefault()
         if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
-        editCampaign(id, campaign)
+        editCampaign(id, campaign)      
         history.push('/dashboard')
     }
     const cancelHandler = (e) => {
@@ -69,7 +71,7 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
                 setCampaign({...campaign, successprediction: res.data.prediction})
             })
             .catch(err => {
-                debugger
+                dispatch({type: ERROR, payload: "That wasn't suppose to happen, try again"})
             })
     }
 
@@ -78,97 +80,100 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
             .get(`/campaigns/campaign/${id}`)
             .then(res => {
                 setCampaign(res.data)
+                dispatch({type: ERROR, payload: ''})
             })
             .catch(err => {
-                debugger
+                dispatch({type: ERROR, payload: "That wasn't suppose to happen, try again"})
             })
     },[])
 
     return (
         <>
             <h1>Edit Campaign</h1>
-            <TextField
-                    label='Success Prediction'
-                    variant="outlined"
-                    name='successprediction'
-                    value={campaign.successprediction}
-                    InputProps={{
-                        readOnly: true,
-                      }}
-                />
-            <form onSubmit={submitHandler}>
+            {loading ? <CircularProgress /> : 
+            <>
                 <TextField
-                    label='Name'
-                    variant="outlined"
-                    name='name'
-                    value={campaign.name}
-                    onChange={inputHandler}
-                    type='text'
-                />
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel >Category</InputLabel>
-                    <Select
-                    value={campaign.category}
-                    name='category'
-                    onChange={inputHandler}
-                    label="Category"
-                    >
-                    <MenuItem value="">
-                        <em>--Select--</em>
-                    </MenuItem>
-                    {categories.map(category => {
-                        return <MenuItem value={category}>{category}</MenuItem>
-                    })}
-                    </Select>
-                </FormControl>
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel >Country</InputLabel>
-                    <Select
-                    value={campaign.country}
-                    name='country'
-                    onChange={inputHandler}
-                    label="Country"
-                    >
-                    <MenuItem value="">
-                        <em>--Select--</em>
-                    </MenuItem>
-                    {country_code.map(code => {
-                        return <MenuItem value={Object.values(code)[0]}>{Object.keys(code)}</MenuItem>
-                    })}
-                    </Select>
-                </FormControl>
-                <TextField
-                    label='Goal'
-                    variant="outlined"
-                    name='goal'
-                    value={campaign.goal}
-                    onChange={inputHandler}
-                    type='number'
-                />
-                <TextField
-                    multiline
-                    rows={4}
-                    label='Blurb'
-                    variant="outlined"
-                    name='blurb'
-                    value={campaign.blurb}
-                    onChange={inputHandler}
-                    type='text'
-                />
-                {loading ? <CircularProgress /> : ''}
-                <Button type='submit' variant="contained" color="primary">
-                    Save
-                </Button>
-                <Button variant="contained" color="primary" onClick={predictHandler}>
-                    Predict Success
-                </Button>
-                <Button variant="contained" color="primary" onClick={deleteHandler}>
-                    Delete
-                </Button>
-                <Button variant="contained" color="primary" onClick={cancelHandler}>
-                    Cancel
-                </Button>
-            </form>
+                        label='Success Prediction'
+                        variant="outlined"
+                        name='successprediction'
+                        value={campaign.successprediction}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+                <form onSubmit={submitHandler}>
+                    <TextField
+                        label='Name'
+                        variant="outlined"
+                        name='name'
+                        value={campaign.name}
+                        onChange={inputHandler}
+                        type='text'
+                    />
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel >Category</InputLabel>
+                        <Select
+                        value={campaign.category}
+                        name='category'
+                        onChange={inputHandler}
+                        label="Category"
+                        >
+                        <MenuItem value="">
+                            <em>--Select--</em>
+                        </MenuItem>
+                        {categories.map(category => {
+                            return <MenuItem value={category}>{category}</MenuItem>
+                        })}
+                        </Select>
+                    </FormControl>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel >Country</InputLabel>
+                        <Select
+                        value={campaign.country}
+                        name='country'
+                        onChange={inputHandler}
+                        label="Country"
+                        >
+                        <MenuItem value="">
+                            <em>--Select--</em>
+                        </MenuItem>
+                        {country_code.map(code => {
+                            return <MenuItem value={Object.values(code)[0]}>{Object.keys(code)}</MenuItem>
+                        })}
+                        </Select>
+                    </FormControl>
+                    <TextField
+                        label='Goal'
+                        variant="outlined"
+                        name='goal'
+                        value={campaign.goal}
+                        onChange={inputHandler}
+                        type='number'
+                    />
+                    <TextField
+                        multiline
+                        rows={4}
+                        label='Blurb'
+                        variant="outlined"
+                        name='blurb'
+                        value={campaign.blurb}
+                        onChange={inputHandler}
+                        type='text'
+                    />
+                    <Button type='submit' variant="contained" color="primary">
+                        Save
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={predictHandler}>
+                        Predict Success
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={deleteHandler}>
+                        Delete
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={cancelHandler}>
+                        Cancel
+                    </Button>
+                </form>
+            </>}
         </>
     )
 }

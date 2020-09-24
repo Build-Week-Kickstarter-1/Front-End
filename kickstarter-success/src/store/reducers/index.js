@@ -25,9 +25,9 @@ export const initialState = {
 export default (state = initialState, action) => {
     switch(action.type){
         case FETCH_USERINFO:
-            return {...state, userInfo: [], loading: true, errorMessage: ''}
+            return {...state, userInfo: [], loading: true}
         case FETCH_USERINFO_SUCCESS:
-            return {...state, userInfo: action.payload.campaigns, username: action.payload.username ,loading: false, errorMessage: ''}
+            return {...state, userInfo: action.payload.campaigns, username: action.payload.username ,loading: false}
         case FETCH_USERINFO_ERROR:
             return {...state, userInfo: [], loading: false, errorMessage: action.payload}
         case POST_NEW_CAMPAIGN:

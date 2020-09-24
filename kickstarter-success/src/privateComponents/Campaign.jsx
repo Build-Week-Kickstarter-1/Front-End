@@ -9,7 +9,7 @@ const Campaign = ({info}) => {
         history.push(`/campaign/${info.campaignid}`)
     }
     return (
-        <TableRow key={info.campaignid} onClick={editHandler} >
+        <TableRow key={info.campaignid} onClick={editHandler} className='pointer' >
             <TableCell >{info.campaignid}</TableCell>
             <TableCell align="right">{info.name}</TableCell>
             <TableCell align="right">{info.blurb}</TableCell>

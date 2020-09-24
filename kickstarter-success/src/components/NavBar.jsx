@@ -52,19 +52,19 @@ const NavBar = () => {
     }
     return (
         <Navbar color="light" light expand="md">
-            <NavbarBrand onClick={()=>history.push('/')}>CATALYST</NavbarBrand>
+            <NavbarBrand onClick={()=>history.push('/')} className='pointer'>CATALYST</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
                     {token ? 
-                    <NavItem>
+                    <NavItem className='pointer'>
                         <NavLink onClick={() => urlChangeHandler('dashboard')}>Dashboard</NavLink>
                     </NavItem> :
                     <>
-                        <NavItem>
+                        <NavItem className='pointer'>
                             <NavLink onClick={()=> urlChangeHandler('login')}>Login</NavLink>
                         </NavItem>
-                        <NavItem>
+                        <NavItem className='pointer'>
                             <NavLink onClick={()=> urlChangeHandler('register')}>Register</NavLink>
                         </NavItem>
                     </>
@@ -77,10 +77,10 @@ const NavBar = () => {
                                 <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true} size='3rem' name={username}/>
                             </DropdownToggle>
                             <DropdownMenu right>
-                                <DropdownItem>
+                                <DropdownItem onClick={()=> urlChangeHandler('profile')} className='pointer'>
                                     View Profile
                                 </DropdownItem>
-                                <DropdownItem onClick={logoutHandler}>
+                                <DropdownItem onClick={logoutHandler} className='pointer'>
                                     Sign Out
                                 </DropdownItem>
                             </DropdownMenu>

@@ -18,7 +18,6 @@ const Campaigns = ({userInfo}) => {
     useEffect(()=>{
         userInfo()
     },[])
-    console.log(user)
     if (user.errorMessage === "Request failed with status code 401"){
         window.localStorage.removeItem('token')
         history.push('/login')

@@ -34,6 +34,7 @@ const Login = () => {
         window.localStorage.setItem('token', response.data.access_token)
         history.push('./dashboard')
         setLogin(initialLogin)
+        dispatch({type: ERROR, payload: ''})
         setIsLoading(false)
       })
       .catch(error => {
@@ -44,6 +45,7 @@ const Login = () => {
   return (
     <>
       <h1>Login</h1>
+      {isLoading ? <CircularProgress /> : ''}
       <form onSubmit={submitHandler}>
         <TextField
             label='Username'
@@ -61,7 +63,6 @@ const Login = () => {
             onChange={inputHandler}
             type='password'
         />
-        {isLoading ? <CircularProgress /> : ''}
         <Button type='submit' variant="contained" color="primary">
             Login
         </Button>

@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {connect} from 'react-redux'
+import {connect, useSelector} from 'react-redux'
 import { TextField, Button, CircularProgress, FormControl, InputLabel, Select ,MenuItem, makeStyles} from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { categories } from '../assets/categories'
 import { addCampaign } from '../store/actions/userActions';
 import {country_code} from '../assets/countryCode'
+import { ERROR } from '../store/actions/userActions';
+
 const initialCampaign = {
     name: '',
     blurb: '',
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const AddCampaign = ({addCampaign}) => {
     const [campaign, setCampaign] = useState(initialCampaign)
     let history = useHistory()
+    const loading = useSelector(state => state.loading)
     const classes = useStyles();
     const inputHandler = (e) => {
         setCampaign({...campaign, [e.target.name]: e.target.value, successprediction: ''})
@@ -82,85 +85,87 @@ const AddCampaign = ({addCampaign}) => {
 
         <>
             <h1>New Campaign</h1>
-            <TextField
-                    label='Success Prediction'
-                    variant="outlined"
-                    name='successprediction'
-                    value={campaign.successprediction}
-                    InputProps={{
-                        readOnly: true,
-                      }}
-                />
-            <form onSubmit={submitHandler}>
+            {loading ? <CircularProgress /> : 
+            <>
                 <TextField
-                    label='Name'
-                    variant="outlined"
-                    name='name'
-                    value={campaign.name}
-                    onChange={inputHandler}
-                    type='text'
-                />
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel >Category</InputLabel>
-                    <Select
-                    value={campaign.category}
-                    name='category'
-                    onChange={inputHandler}
-                    label="Category"
-                    >
-                    <MenuItem value="">
-                        <em>--Select--</em>
-                    </MenuItem>
-                    {categories.map(category => {
-                        return <MenuItem value={category}>{category}</MenuItem>
-                    })}
-                    </Select>
-                </FormControl>
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel >Country</InputLabel>
-                    <Select
-                    value={campaign.country}
-                    name='country'
-                    onChange={inputHandler}
-                    label="Country"
-                    >
-                    <MenuItem value="">
-                        <em>--Select--</em>
-                    </MenuItem>
-                    {country_code.map(code => {
-                        return <MenuItem value={Object.values(code)[0]}>{Object.keys(code)}</MenuItem>
-                    })}
-                    </Select>
-                </FormControl>
-                <TextField
-                    label='Goal'
-                    variant="outlined"
-                    name='goal'
-                    value={campaign.goal}
-                    onChange={inputHandler}
-                    type='number'
-                />
-                <TextField
-                    multiline
-                    rows={4}
-                    label='Blurb'
-                    variant="outlined"
-                    name='blurb'
-                    value={campaign.blurb}
-                    onChange={inputHandler}
-                    type='text'
-                />
-                {/* {isLoading ? <CircularProgress /> : ''} */}
-                <Button type='submit' variant="contained" color="primary">
-                    Add
-                </Button>
-                <Button variant="contained" color="primary" onClick={predictHandler}>
-                    Predict Success
-                </Button>
-                <Button variant="contained" color="primary" onClick={cancelHandler}>
-                    Cancel
-                </Button>
-            </form>
+                        label='Success Prediction'
+                        variant="outlined"
+                        name='successprediction'
+                        value={campaign.successprediction}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+                <form onSubmit={submitHandler}>
+                    <TextField
+                        label='Name'
+                        variant="outlined"
+                        name='name'
+                        value={campaign.name}
+                        onChange={inputHandler}
+                        type='text'
+                    />
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel >Category</InputLabel>
+                        <Select
+                        value={campaign.category}
+                        name='category'
+                        onChange={inputHandler}
+                        label="Category"
+                        >
+                        <MenuItem value="">
+                            <em>--Select--</em>
+                        </MenuItem>
+                        {categories.map(category => {
+                            return <MenuItem value={category}>{category}</MenuItem>
+                        })}
+                        </Select>
+                    </FormControl>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel >Country</InputLabel>
+                        <Select
+                        value={campaign.country}
+                        name='country'
+                        onChange={inputHandler}
+                        label="Country"
+                        >
+                        <MenuItem value="">
+                            <em>--Select--</em>
+                        </MenuItem>
+                        {country_code.map(code => {
+                            return <MenuItem value={Object.values(code)[0]}>{Object.keys(code)}</MenuItem>
+                        })}
+                        </Select>
+                    </FormControl>
+                    <TextField
+                        label='Goal'
+                        variant="outlined"
+                        name='goal'
+                        value={campaign.goal}
+                        onChange={inputHandler}
+                        type='number'
+                    />
+                    <TextField
+                        multiline
+                        rows={4}
+                        label='Blurb'
+                        variant="outlined"
+                        name='blurb'
+                        value={campaign.blurb}
+                        onChange={inputHandler}
+                        type='text'
+                    />
+                    <Button type='submit' variant="contained" color="primary">
+                        Add
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={predictHandler}>
+                        Predict Success
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={cancelHandler}>
+                        Cancel
+                    </Button>
+                </form>
+            </>}
         </>
     )
 }
