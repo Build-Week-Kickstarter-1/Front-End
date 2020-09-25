@@ -36,7 +36,6 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
         setCampaign({...campaign, [e.target.name]: e.target.value, successprediction: ''})
     }
     const loading = useSelector(state => state.loading)
-    const data = useSelector(state => state.userInfo)
     const submitHandler = (e) => {
         e.preventDefault()
         if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
@@ -58,7 +57,6 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
         e.preventDefault()
         dispatch({type: LOADING, payload: true})
         if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
-        let today = new Date();
         const campaignData = {
             name: campaign.name,
             blurb: campaign.blurb,

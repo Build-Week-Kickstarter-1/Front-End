@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
             return {...state, loading: true, errorMessage: ''}
         case DELETE_CAMPAIGN_SUCCESS:
             return {...state, userInfo: state.userInfo.filter(info => {
-                    return info.id != action.payload
+                    return info.campaignid != action.payload
                 }), loading: false, errorMessage: 'Campaign deleted successfully'}
         case DELETE_CAMPAIGN_ERROR:
             return {...state, loading: false, errorMessage: action.payload}
