@@ -6,6 +6,7 @@ import AddCampaign from '../privateComponents/AddCampaign'
 import LoginRoute from './LoginRoute'
 import PrivateRoute from './PrivateRoute'
 import EditCampaign from '../privateComponents/EditCampaign'
+import EditUserInfo from '../privateComponents/EditUserInfo'
 
 const Routes = () => {
     return (
@@ -14,6 +15,7 @@ const Routes = () => {
             <PrivateRoute exact path='/dashboard' component={Dashboard}/>
             <PrivateRoute exact path='/new-campaign' component={AddCampaign}/>
             <PrivateRoute exact path='/campaign/:id' component={EditCampaign}/>
+            <PrivateRoute exact path='/profile' component={EditUserInfo}/>
         </Switch>
     )
 }
