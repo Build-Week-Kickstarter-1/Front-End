@@ -13,6 +13,7 @@ import {
     EDIT_CAMPAIGN_ERROR,
     LOGOUT,
     ERROR,
+    LOADING,
 } from '../actions/userActions'
 
 export const initialState = {
@@ -60,6 +61,8 @@ export default (state = initialState, action) => {
             return {...state,  userInfo: [], username: '', loading: false, errorMessage: action.payload}
         case ERROR:
             return {...state, errorMessage: action.payload}
+        case LOADING:
+            return {...state, loading: action.payload}
         default:
             return state
     }

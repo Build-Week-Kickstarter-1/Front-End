@@ -7,7 +7,7 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { deleteCampaign, editCampaign } from '../store/actions/userActions'
 import {country_code} from '../assets/countryCode'
 import { categories } from '../assets/categories'
-import { ERROR } from '../store/actions/userActions';
+import { ERROR, LOADING } from '../store/actions/userActions';
 
 const initialCampaign = {
     name: '',
@@ -54,7 +54,9 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
         deleteCampaign(id)
         history.push('/dashboard')
     }
-    const predictHandler = () => {
+    const predictHandler = (e) => {
+        e.preventDefault()
+        dispatch({type: LOADING, payload: true})
         if (!campaign.name || !campaign.blurb || !campaign.category || !campaign.country || !campaign.goal) return 
         let today = new Date();
         const campaignData = {
@@ -69,9 +71,11 @@ const EditCampaign = ({deleteCampaign, editCampaign}) => {
         axios.post('https://ds-ks-api-september-2020.herokuapp.com/predict', campaignData)
             .then(res => {
                 setCampaign({...campaign, successprediction: res.data.prediction})
+                dispatch({type: LOADING, payload: false})
             })
             .catch(err => {
                 dispatch({type: ERROR, payload: "That wasn't suppose to happen, try again"})
+                dispatch({type: LOADING, payload: false})
             })
     }
 
