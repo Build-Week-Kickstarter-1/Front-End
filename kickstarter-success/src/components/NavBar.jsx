@@ -33,7 +33,7 @@ const NavBar = () => {
             .get('/logout')
             .then(res => {
                 window.localStorage.removeItem('token')
-                dispatch({type: LOGOUT, payload: 'you have sucessfully logged out'})
+                dispatch({type: LOGOUT, payload: 'You have sucessfully logged out'})
                 history.push('/login')
             })
             .catch(err => {})
