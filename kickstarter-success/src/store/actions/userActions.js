@@ -18,7 +18,8 @@ export const EDIT_CAMPAIGN_ERROR = 'EDIT_CAMPAIGN_ERROR';
 
 export const LOGOUT = 'LOGOUT';
 export const ERROR = 'ERROR';
-export const LOADING = 'LOADING'
+export const LOADING = 'LOADING';
+export const DARK_MODE = 'DARK_MODE';
 
 export const userInfo = () => {
     return (dispatch) => {

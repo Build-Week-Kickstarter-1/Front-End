@@ -11,16 +11,18 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from 'reactstrap';
 
 import Avatar from 'react-avatar';
 import { useSelector, useDispatch } from 'react-redux';
+import { FormControlLabel, Switch } from '@material-ui/core';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import {LOGOUT, ERROR} from '../store/actions/userActions'
+import {LOGOUT, ERROR, DARK_MODE} from '../store/actions/userActions'
 
 const NavBar = () => {
     const username = useSelector(state => state.username)
+    const darkMode = useSelector(state => state.darkMode)
     const history = useHistory();
     const dispatch = useDispatch()
     const [token, setToken] = useState()
@@ -50,8 +52,21 @@ const NavBar = () => {
         history.push(`/${path}`)
 
     }
+
+    const darkmodeHandler = (e) => {
+        e.preventDefault()
+        window.localStorage.setItem('darkMode', JSON.stringify(!darkMode))
+        dispatch({type: DARK_MODE})
+    }
+
+    useEffect(()=>{
+        const dm = window.localStorage.getItem('darkMode')
+        if (dm) {
+            dispatch({type: DARK_MODE, payload:dm})
+        }
+    },[])
     return (
-        <Navbar color="light" light expand="md">
+        <Navbar className={darkMode ? 'navbar navbar-dark bg-dark' : 'navbar navbar-light'} light expand="md">
             <NavbarBrand onClick={()=>history.push('/')} className='pointer'>CATALYST</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
@@ -80,6 +95,16 @@ const NavBar = () => {
                                 <DropdownItem onClick={()=> urlChangeHandler('profile')} className='pointer'>
                                     View Profile
                                 </DropdownItem>
+                                <FormControlLabel
+                                    control={
+                                    <Switch
+                                        checked={darkMode}
+                                        onChange={darkmodeHandler}
+                                        color="primary"
+                                    />
+                                    }
+                                    label="Dark Mode"
+                                />
                                 <DropdownItem onClick={logoutHandler} className='pointer'>
                                     Sign Out
                                 </DropdownItem>

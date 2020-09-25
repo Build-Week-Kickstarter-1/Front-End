@@ -14,6 +14,7 @@ import {
     LOGOUT,
     ERROR,
     LOADING,
+    DARK_MODE,
 } from '../actions/userActions'
 
 export const initialState = {
@@ -21,6 +22,7 @@ export const initialState = {
     username: '',
     loading: true,
     errorMessage: '',
+    darkMode: false,
 }
 
 export default (state = initialState, action) => {
@@ -63,6 +65,8 @@ export default (state = initialState, action) => {
             return {...state, errorMessage: action.payload}
         case LOADING:
             return {...state, loading: action.payload}
+        case DARK_MODE:
+            return {...state, darkMode: action.payload ? action.payload : !state.darkMode}
         default:
             return state
     }
