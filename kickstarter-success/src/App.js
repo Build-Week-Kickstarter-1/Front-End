@@ -7,24 +7,17 @@ import Dashboard from "./components/Dashboard";
 import Campaign from "./components/Campaign";
 import "./styles/App.css";
 
+import "./App.css";
+import AlertMessage from "./components/AlertMessage";
+import NavBar from "./components/NavBar";
+import Routes from "./routes/Routes";
+
 function App() {
   return (
     <div className="App">
       <NavBar />
-      <Switch>
-        <Route path="/register">
-          <RegisterForm />
-        </Route>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
-        <Route path="/dashboard">
-          <Dashboard />
-        </Route>
-        <Route path="/campaign">
-          <Campaign />
-        </Route>
-      </Switch>
+      <AlertMessage />
+      <Routes />
     </div>
   );
 }
