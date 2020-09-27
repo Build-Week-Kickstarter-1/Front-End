@@ -32,7 +32,7 @@ const Login = () => {
       })
       .then(response => {
         window.localStorage.setItem('token', response.data.access_token)
-        history.push('./dashboard')
+        history.push('/dashboard')
         setLogin(initialLogin)
         dispatch({type: ERROR, payload: ''})
         setIsLoading(false)
