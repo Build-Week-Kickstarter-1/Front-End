@@ -67,7 +67,7 @@ const NavBar = () => {
     },[])
     return (
         <Navbar className={darkMode ? 'navbar navbar-dark bg-dark' : 'navbar navbar-light'} light expand="md">
-            <NavbarBrand onClick={()=>history.push('/')} className='pointer'>CATALYST</NavbarBrand>
+            <NavbarBrand onClick={()=>history.push('/')} className='pointer'>Kickstarter Success</NavbarBrand>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="mr-auto" navbar>
@@ -89,7 +89,7 @@ const NavBar = () => {
                     (  
                         <UncontrolledDropdown>
                             <DropdownToggle nav>
-                                <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} round={true} size='3rem' name={username}/>
+                                <Avatar color={Avatar.getRandomColor(['red', 'green', 'blue', 'orange', 'yellow', 'pink', 'purple'])} round={true} size='3rem' name={username}/>
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem onClick={()=> urlChangeHandler('profile')} className='pointer'>
